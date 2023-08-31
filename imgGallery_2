@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #wrap {
+        max-width: 90%;
+        margin: 0 auto;
+      }
+      main {
+        max-width: 80%;
+        margin: 0 auto;
+      }
+      h1 {
+        background-color: tomato;
+        color: white;
+        text-align: center;
+      }
+      #imglist {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-gap: 10px;
+      }
+      #imglist img {
+        cursor: pointer;
+      }
+      #selected {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      #selected img {
+        width: 50%;
+        border: 10px solid snow;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <header>
+        <h1>갤러리</h1>
+      </header>
+      <main>
+        <div id="imglist">
+          <img src="img/cup-1.jpg" />
+          <img src="img/cup-2.jpg" />
+          <img src="img/cup-3.jpg" />
+          <img src="img/cup-4.jpg" />
+          <img src="img/cup-5.jpg" />
+          <img src="img/cup-6.jpg" />
+          <img src="img/cup-7.jpg" />
+          <img src="img/cup-8.jpg" />
+        </div>
+      </main>
+      <div id="selected" class="hidden">
+        <img src="img/cup-1.jpg" />
+        <button id="closeBtn">x</button>
+        <button id="prevBtn"><</button>
+        <button id="nextBtn">></button>
+      </div>
+    </div>
+    <script>
+      const imglist = document.querySelectorAll("#imglist img");
+      const selectedImg = document.querySelector("#selected img");
+      const selected = document.getElementById("selected");
+      const closeBtn = document.getElementById("closeBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let index = 0;
+      function nextImg() {
+        if (index >= imglist.length - 1) {
+          index = 0;
+        } else {
+          index++;
+        }
+        selectedImg.setAttribute("src", imglist[index].src);
+      }
+
+      function prevImg() {
+        if (index <= 0) {
+          index = 7;
+        } else {
+          index--;
+        }
+        selectedImg.setAttribute("src", imglist[index].src);
+      }
+
+      function showImg() {
+        const regex = /[^0-9]/gm;
+        const regex1 = /\d$/gm;
+        imgsrc = this.src;
+        const regexNumber = imgsrc.replace(regex, "");
+        const regexResult = regexNumber.match(regex1, " ");
+        index = parseInt(regexResult.join("")) - 1;
+        console.dir(this.src);
+        selectedImg.setAttribute("src", this.src);
+        selected.classList.remove("hidden");
+        nextBtn.addEventListener("click", nextImg);
+        prevBtn.addEventListener("click", prevImg);
+      }
+
+      const closeImg = () => {
+        selected.classList.add("hidden");
+      };
+      for (let i = 0; i < imglist.length; i++) {
+        imglist[i].addEventListener("click", showImg);
+      }
+
+      closeBtn.addEventListener("click", closeImg);
+    </script>
+  </body>
+</html>
