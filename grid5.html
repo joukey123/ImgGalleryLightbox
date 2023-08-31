@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #wrap {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 1rem;
+      }
+
+      #card {
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        text-align: center;
+        padding: 10px 20px;
+        background-color: beige;
+      }
+      #showCard {
+        background-color: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      #bigCard {
+        width: 320px;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        text-align: center;
+        padding: 10px 20px;
+        background-color: beige;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .hidden {
+        display: none;
+      }
+      button {
+        position: absolute;
+      }
+      #prev {
+        left: 20%;
+        top: 50%;
+      }
+      #next {
+        right: 20%;
+        top: 50%;
+      }
+      /* #close {
+        right: 0%;
+        top: 50%;
+      } */
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="card" value="1">
+        <h1>사진제목1</h1>
+        <img src="img/cup-1.jpg" />
+        <p>
+          1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card" value="2">
+        <h1>사진제목2</h1>
+        <img src="img/cup-2.jpg" />
+        <p>
+          2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card">
+        <h1>사진제목3</h1>
+        <img src="img/cup-3.jpg" />
+        <p>
+          3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card">
+        <h1>사진제목4</h1>
+        <img src="img/cup-4.jpg" />
+        <p>
+          4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card">
+        <h1>사진제목5</h1>
+        <img src="img/cup-5.jpg" />
+        <p>
+          5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card">
+        <h1>사진제목6</h1>
+        <img src="img/cup-6.jpg" />
+        <p>
+          6 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card">
+        <h1>사진제목7</h1>
+        <img src="img/cup-7.jpg" />
+        <p>
+          7 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+      <div id="card">
+        <h1>사진제목8</h1>
+        <img src="img/cup-8.jpg" />
+        <p>
+          8 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel a modi
+          impedit quam voluptate id amet dignissimos sapiente sed nulla voluptas
+          saepe tenetur eos obcaecati, soluta commodi. Incidunt, doloribus ut?
+        </p>
+      </div>
+    </div>
+
+    <div id="showCard" class="hidden">
+      <div id="bigCard">
+        <h1></h1>
+        <img />
+        <p></p>
+      </div>
+      <button id="prev"><</button>
+      <button id="next">></button>
+      <button id="close">X</button>
+    </div>
+
+    <script>
+      const card = document.querySelectorAll("#card");
+      const showCard = document.querySelector("#showCard");
+      const h1 = document.querySelector("#bigCard h1");
+      const img = document.querySelector("#bigCard img");
+      const p = document.querySelector("#bigCard p");
+      const nextBtn = document.querySelector("#next");
+      const prevBtn = document.querySelector("#prev");
+      const showBtn = document.querySelector("#close");
+
+      let index = 0;
+
+      function prev() {
+        if (index <= 0) {
+          index = 7;
+        } else {
+          index--;
+        }
+        h1.innerText = card[index].children[0].innerText;
+        img.setAttribute("src", card[index].children[1].src);
+        p.innerText = card[index].children[2].innerText;
+      }
+
+      function next() {
+        console.log(index);
+        if (index >= card.length - 1) {
+          index = 0;
+        } else {
+          index++;
+        }
+        h1.innerText = card[index].children[0].innerText;
+        img.setAttribute("src", card[index].children[1].src);
+        p.innerText = card[index].children[2].innerText;
+      }
+
+      function paintShowCard() {
+        const regex = /[^0-9]/gm;
+        h1Title = this.children[0].innerText;
+        const regexResult = parseInt(h1Title.replace(regex, ""));
+        index = regexResult - 1;
+        console.log(index);
+        h1.innerText = this.children[0].innerText;
+        img.setAttribute("src", this.children[1].src);
+        p.innerText = this.children[2].innerText;
+        showHidden();
+        nextBtn.addEventListener("click", next);
+        prevBtn.addEventListener("click", prev);
+      }
+
+      const showHidden = () => {
+        showCard.classList.toggle("hidden");
+      };
+
+      for (let i = 0; i < card.length; i++) {
+        card[i].addEventListener("click", paintShowCard);
+      }
+
+      showBtn.addEventListener("click", showHidden);
+    </script>
+  </body>
+</html>
